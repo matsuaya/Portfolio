@@ -15,10 +15,9 @@ class CreateHistoriesTable extends Migration
     {
         Schema::create('histories', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('day');
             $table->string('employee_code');
-            $table->string('start_time');
-            $table->string('end_time');
+            $table->datetime('start_time');
+            $table->datetime('end_time');
             $table->string('break_time');
             $table->timestamps();
         });
