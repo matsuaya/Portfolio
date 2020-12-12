@@ -13,7 +13,7 @@
         <div class="form-group row">
             <label class="col-md-2" for="title">日付</label>
             <div class="col-md-10">
-                <input type="text" class="input_form" name="day">
+                <input type="date" class="input_form" name="day">
             </div>
             <label class="col-md-2" for="title">社員ID</label>
             <div class="col-md-10">
