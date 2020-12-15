@@ -10,24 +10,23 @@
     
     <body>
         <h2>勤怠編集</h2>
-        <form action="{{ action('Admin\UserController@update') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ action('Admin\UserController@create') }}" method="post" enctype="multipart/form-data">
         <div class="form-group row">
-            <input type="hidden" name="id" value="{{ $histories_form->id }}">
             <label class="col-md-2" for="title">社員ID</label>
             <div class="col-md-10">
-                <input type="text" class="input_form" name="employee_code" value="{{ $histories_form->employee_code }}">
+                <input type="text" class="input_form" name="employee_code">
             </div>
             <label class="col-md-2" for="title">開始時刻</label>
             <div class="col-md-10">
-                <input type="datetime-local" class="input_form" name="start_time" value="{{ \Carbon\Carbon::parse($histories_form->start_time)->format('Y-m-d\TH:i') }}">
+                <input type="datetime-local" class="input_form" name="start_time">
             </div>
             <label class="col-md-2" for="title">終了時刻</label>
             <div class="col-md-10">
-                <input type="datetime-local" class="input_form" name="end_time" value="{{ \Carbon\Carbon::parse($histories_form->end_time)->format('Y-m-d\TH:i') }}">
+                <input type="datetime-local" class="input_form" name="end_time">
             </div>
             <label class="col-md-2" for="title">休憩時間</label>
             <div class="col-md-10">
-                <input type="text" class="input_form" name="break_time" value="{{ $histories_form->break_time }}">
+                <input type="text" class="input_form" name="break_time">
             </div>
             {{ csrf_field() }}
             <input type="submit" class="btn_edit" value="変更">

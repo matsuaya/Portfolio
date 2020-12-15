@@ -20,11 +20,14 @@ Route::group(['prefix'=>'admin','middleware'=>['auth','can:admin_auth']],functio
     Route::post('permit', 'Admin\ManageController@update');
 });
 
+
 Route::group(['prefix'=>'user','middleware'=>'auth'],function(){
     Route::get('offer', 'Admin\UserController@applyIndex');
     Route::post('offer', 'Admin\UserController@restApply');
-    Route::get('edit', 'Admin\UserController@editIndex');
-    Route::post('edit', 'Admin\UserController@edit');
+    Route::get('create', 'Admin\UserController@createIndex');
+    Route::post('create', 'Admin\UserController@create');
+    Route::get('edit', 'Admin\UserController@edit');
+    Route::post('edit', 'Admin\UserController@update');
     Route::get('calendar', 'Admin\UserController@listView');
     Route::post('calendar', 'Admin\UserController@listEdit');
 });

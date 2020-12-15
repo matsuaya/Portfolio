@@ -24,6 +24,8 @@ class ManageController extends Controller
         $permit=new User;
         //送信されてきたフォームデータを格納する
         $permit_form=$request->all();
+        $hash = password_hash($request['password'], PASSWORD_BCRYPT);
+        $permit_form['password'] = $hash;
         $permit->fill($permit_form);
         $permit->save();
         
