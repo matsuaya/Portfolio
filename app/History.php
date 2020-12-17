@@ -10,7 +10,7 @@ class History extends Model
 
     public static $rules = array(
         'employee_code' => 'required',
-        'start_time' => 'required',
+        'start_time' => 'not_same_day',
         'end_time' => 'required',
         'break_time' => 'required',
     );

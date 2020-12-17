@@ -41,26 +41,20 @@ class UserController extends Controller
         $history=new History;
         //送信されてきたフォームデータを格納する
         $history->fill_history($request);
-        $new_date=$history->start_time->format('Y-m-d');
-        $check = History::where('start_time','like',$new_date)->get();
-        if(count($check)==0)
-        {
-            $history->save();
-        }
-
+        
         return redirect('user/calendar/');
     }
     
     public function edit(Request $request)
     {
         $histories=History::find($request->id);
-        //dd($histories->start_time->format('Y-m-d H:i:s'));
-        
+
         return view('user.edit',['histories_form'=>$histories]);
     }
     
     public function update(Request $request)
     {
+        //Validationをかける
         $this->validate($request,History::$rules);
         $histories=History::find($request->id);
         $histories->fill_history($request)->save();

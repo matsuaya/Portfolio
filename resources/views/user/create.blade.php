@@ -5,11 +5,20 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>編集画面</title>
+        <title>登録画面</title>
     </head>
     
     <body>
-        <h2>勤怠編集</h2>
+        <h2>勤怠登録</h2>
+        @if (count($errors) > 0)
+            <ul>
+                @foreach($errors->all() as $e)
+                    <li>{{ $e }}</li>
+                @endforeach
+            </ul>
+        @endif
+
+        
         <form action="{{ action('Admin\UserController@create') }}" method="post" enctype="multipart/form-data">
         <div class="form-group row">
             <label class="col-md-2" for="title">社員ID</label>

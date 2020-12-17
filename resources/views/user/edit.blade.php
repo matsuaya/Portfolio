@@ -10,6 +10,13 @@
     
     <body>
         <h2>勤怠編集</h2>
+        @if (count($errors) > 0)
+            <ul>
+                @foreach($errors->all() as $e)
+                    <li>{{ $e }}</li>
+                @endforeach
+            </ul>
+        @endif
         <form action="{{ action('Admin\UserController@update') }}" method="post" enctype="multipart/form-data">
         <div class="form-group row">
             <input type="hidden" name="id" value="{{ $histories_form->id }}">
