@@ -24,6 +24,8 @@
         <a href="{{ action('Admin\ManageController@manage')}}">管理画面</a>
         @endcan
         </div>
+        <form action="{{ action('Admin\UserController@csvExport') }}" method='post'>
+        @csrf
         <table class="left-table table-bordered">
         <thead class="thead-dark">
           <tr>
@@ -61,7 +63,9 @@
             </tr>
             @endfor
         </tbody>
+        <button type='submit'>CSV出力</button>
         </thead>
         </table>
+        </form>
     </body>
 </html>

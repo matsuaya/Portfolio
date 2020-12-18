@@ -8,9 +8,12 @@ use App\Rest;
 use App\History;
 use Carbon\Carbon;
 use Storage;
+use App\Http\Traits\Csv;
 
 class UserController extends Controller
 {
+    use Csv;
+    
     public function applyIndex(Request $request)
     {
         return view('user.offer');
@@ -75,4 +78,86 @@ class UserController extends Controller
     {
         return view('user.calendar');
     }
+    
+    public function csvExport()
+    {
+        // リスト
+        $lists = [
+            ['おはよう', 'おやすみ'],
+            ['こんにちは', 'さようなら'],
+        ];
+    
+        $filename = 'demo.csv';
+        $file = Csv::createCsv($filename);
+    
+        // ヘッダー
+        Csv::write($file, ['header1', 'header2']); 
+    
+    
+        // 値を入れる
+        foreach ($lists as $list) {
+            Csv::write($file, $list);
+        }
+    
+        $response = file_get_contents($file);
+    
+        // ストリーム(出力用)に入れたら実ファイル(laravel)は削除
+        Csv::purge($filename);
+    
+        return response($response, 200)
+                 ->header('Content-Type', 'text/csv')
+                 ->header('Content-Disposition', 'attachment; filename='.$filename);
+
+        /*$headers = [ //ヘッダー情報
+            'Content-type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename=csvexport.csv',
+            'Pragma' => 'no-cache',
+            'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0',
+            'Expires' => '0',
+        ];
+ 
+        $callback = function() 
+        {
+            
+            $createCsvFile = fopen('php://output', 'w'); //ファイル作成
+            
+            $columns = [ //1行目の情報
+                'employee_code',
+                'start_time',
+                'end_time',
+                'break_time',
+            ];
+ 
+            mb_convert_variables('SJIS-win', 'UTF-8', $columns); //文字化け対策
+    
+            fputcsv($createCsvFile, $columns); //1行目の情報を追記
+ 
+            $histories = DB::table('histories');  // データベースのテーブルを指定
+ 
+            $historiesResults = $histories  //データベースからデータ取得
+                ->select(['employee_code'
+                , 'start_time','end_time','break_time'])
+                ->groupby('employee_code')
+                ->get();
+        
+            foreach ($historiesResults as $row) {  //データを1行ずつ回す
+                $csv = [
+                    $row->employee_code,  //オブジェクトなので -> で取得
+                    $row->start_time,
+                    $row->end_time,
+                    $row->break_time,
+                ];
+ 
+                mb_convert_variables('SJIS-win', 'UTF-8', $csv); //文字化け対策
+ 
+                fputcsv($createCsvFile, $csv); //ファイルに追記する
+            }
+            fclose($createCsvFile); //ファイル閉じる
+        };
+        
+        return response()->stream($callback, 200, $headers); //ここで実行
+        */
+        
+    }
+    
 }

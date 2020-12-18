@@ -30,6 +30,7 @@ Route::group(['prefix'=>'user','middleware'=>'auth'],function(){
     Route::post('edit', 'Admin\UserController@update');
     Route::get('calendar', 'Admin\UserController@listView');
     Route::post('calendar', 'Admin\UserController@listEdit');
+    Route::post('csv', 'Admin\UserController@csvExport');
 });
 
 Auth::routes();
