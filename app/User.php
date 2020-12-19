@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Auth;
 
 class User extends Authenticatable
 {
@@ -46,4 +47,12 @@ class User extends Authenticatable
         'role' => 'required',
         'sum_rest_time' => 'required',
     );
+    
+    public static function getEmployeeCode(){
+        $login_user=Auth::user();
+        $user_id=$login_user->employee_code;
+        $emplyee_code=History::where('employee_code',$user_id);
+        
+        return $emplyee_code;
+    }
 }

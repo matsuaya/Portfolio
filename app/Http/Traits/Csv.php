@@ -30,7 +30,6 @@ trait Csv {
         $result = fopen($filepath, 'a');
 
         // ファイルに書き出し
-        //fputcsv
         fputcsv($result, $records);
 
         fclose($result);
