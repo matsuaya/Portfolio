@@ -6,6 +6,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Auth;
+use Carbon\Carbon;
+use App\History;
 
 class User extends Authenticatable
 {
@@ -48,11 +50,14 @@ class User extends Authenticatable
         'sum_rest_time' => 'required',
     );
     
-    public static function getEmployeeCode(){
-        $login_user=Auth::user();
-        $user_id=$login_user->employee_code;
-        $emplyee_code=History::where('employee_code',$user_id);
-        
-        return $emplyee_code;
+    public  static function getCurrentHistories(){
+        $today=new Carbon();
+        $today=Carbon::now()->format('m');
+        $employee_code=Auth::user()->employee_code;
+        $histories=History::whereMonth('start_time',$today )
+                    ->where('employee_code',$employee_code)
+                    ->orderBy('start_time','asc')->get();
+                    
+        return $histories;
     }
 }

@@ -69,9 +69,7 @@ class UserController extends Controller
     
     public function listView(Request $request)
     {
-        $today=new Carbon();
-        $today=Carbon::now()->format('m');
-        $histories=History::whereMonth('start_time',$today )->orderBy('start_time','asc')->get();
+        $histories = User::getCurrentHistories();
 
         return view('user.calendar',['histories'=>$histories]);
     }
@@ -83,8 +81,8 @@ class UserController extends Controller
     
     public function csvExport()
     {
-        $historiesResults=User::getEmployeeCode()->orderBy('start_time','asc')->get();
-        
+        $historiesResults = User::getCurrentHistories();
+
         $filename = 'workHistories.csv';
         $file = Csv::createCsv($filename);
     
