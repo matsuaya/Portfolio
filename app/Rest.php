@@ -13,5 +13,9 @@ class Rest extends Model
         'employee_code' => 'required',
         'name' => 'required',
         'plan_rest_time' => 'required',
+        'rest_time' => 'required',
+        'application_status' => 'required',
     );
+    
+    protected $dates = ['day'];
 }

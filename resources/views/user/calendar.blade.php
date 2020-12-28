@@ -1,29 +1,35 @@
+@php
+use Carbon\Carbon;
+$thisMonth=new Carbon;
+$thisMonth=Carbon::now()->format('m');
+@endphp
+
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="{{ secure_asset('css/calendar.css') }}" rel="stylesheet">
         <title>勤怠一覧画面</title>
         
     </head>
     
     <body>
-        <h2>勤怠一覧</h2>
+        <CENTER>
+        <h2>{{$thisMonth}}月勤怠一覧</h2>
         {{-- ログアウトボタン追加　--}}
-        <a href={{ route('logout') }} onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+        @can('admin_auth')
+        <a class="admin" href="{{ action('Admin\ManageController@manage')}}">管理画面</a>
+        @endcan
+        <a class="apply" href="{{ action('Admin\UserController@applyIndex')}}">有給申請</a>
+        <a class="create" href="{{ action('Admin\UserController@createIndex')}}">勤怠登録</a>
+        <a class="logout" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
         Logout
         </a>
-        <form id='logout-form' action={{ route('logout')}} method="POST" style="display: none;">
+        <form id='logout-form' action="{{ route('logout') }}" method="POST" style="display: none;">
         @csrf
         </form>
-        <div>
-        <a href="{{ action('Admin\UserController@applyIndex')}}">有給申請</a>
-        <a href="{{ action('Admin\UserController@createIndex')}}">勤怠登録</a>
-        @can('admin_auth')
-        <a href="{{ action('Admin\ManageController@manage')}}">管理画面</a>
-        @endcan
-        </div>
         <form action="{{ action('Admin\UserController@csvExport') }}" method='post'>
         @csrf
         <table class="left-table table-bordered">
@@ -48,7 +54,7 @@
                     <td>{{ $histories[$count]->break_time }}</td>
                     <td>
                       <div>
-                        <a href="{{ action('Admin\UserController@edit', ['id' => $histories[$count]->id]) }}">編集</a>
+                        <a class="edit" href="{{ action('Admin\UserController@edit', ['id' => $histories[$count]->id]) }}">編集</a>
                       </div>
                     </td>
                   @php
@@ -63,9 +69,10 @@
             </tr>
             @endfor
         </tbody>
-        <button type='submit'>CSV出力</button>
+        <button class="csv" type='submit'>CSV出力</button>
         </thead>
         </table>
         </form>
+        </CENTER>
     </body>
 </html>

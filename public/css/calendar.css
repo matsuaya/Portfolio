@@ -1,0 +1,68 @@
+body {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #fff;
+  color: #000;
+}
+
+h2 {
+  font-weight: 500;
+}
+
+a:not(.edit) {
+  margin-right: 15px;
+}
+
+.csv {
+  margin: 10px 10px;
+}
+
+a {
+  position: relative;
+  color: #000;
+  text-decoration: none;
+  display: inline-block;
+  transition: 0.3s;
+}
+
+a::after {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  content: "";
+  width: 0;
+  height: 2px;
+  background-color: #52c2d0;
+  transition: 0.3s;
+  transform: translateX(-50%);
+}
+
+a:hover::after {
+  width: 120%;
+}
+
+table {
+  width: 80%;
+  border-collapse: collapse;
+}
+
+table th {
+  position: relative;
+  width: 10%;
+  background-color: #52c2d0;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+}
+
+table td {
+  width: 20%;
+  background: #eee;
+  text-align: center;
+}
+
+table tr:nth-child(odd) td {
+  background: #fff;
+  text-align: center;
+}
+

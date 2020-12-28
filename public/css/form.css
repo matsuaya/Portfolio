@@ -1,0 +1,71 @@
+a:not(.edit) {
+  margin-right: 15px;
+}
+
+.csv {
+  margin: 10px 10px;
+}
+
+a {
+  position: relative;
+  margin-left: 10px;
+  color: #000;
+  text-decoration: none;
+  display: inline-block;
+  transition: 0.3s;
+}
+
+a::after {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  content: "";
+  width: 0;
+  height: 2px;
+  background-color: #52c2d0;
+  transition: 0.3s;
+  transform: translateX(-50%);
+}
+
+a:hover::after {
+  width: 120%;
+}
+
+form:not(#frm_left) {
+  margin: 0 28%;
+  padding: 0% 10%;
+}
+
+form#frm_left {
+  margin: 5% 28%;
+  padding: 0% 10%;
+}
+
+form fieldset {
+  margin: 0;
+  padding: 10px;
+  border: 2px solid #52c2d0;
+  background-color: inherit;
+  color: #fff;
+  font-size: 12px;
+}
+
+form legend {
+  margin: 0 0 10px 0;
+  padding: 2px 5px;
+  color: #52c2d0;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+form p {
+  margin: 10px;
+  padding: 0 0 10px 0;
+  color: #000;
+}
+
+form input {
+  display: inline-block;
+  margin-left: 10px;
+}
+
