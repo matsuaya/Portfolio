@@ -18,7 +18,7 @@ Route::get('/', function () {
 Route::group(['prefix'=>'admin','middleware'=>['auth','can:admin_auth']],function(){
     Route::get('permit', 'Admin\ManageController@manage');
     Route::post('permit', 'Admin\ManageController@update');
-    Route::get('agree', 'Admin\ManageController@agree');
+    Route::get('result', 'Admin\ManageController@result');
 });
 
 

@@ -32,12 +32,18 @@ class ManageController extends Controller
         return redirect('admin/permit/');
     }
 
-    public function agree(Request $request){
+    public function result(Request $request){
         $rest_form = Rest::find($request->id);
-        $rest_form->application_status="1";
+        
+        if($request->result=="confirm"){
+            $rest_form->application_status="1";
+        }elseif($request->result=="deny"){
+            $rest_form->application_status="2";
+        }else{
+            $rest_form->application_status="0";
+        }
         $rest_form->save();
 
         return redirect('admin/permit/');
     }
-
 }

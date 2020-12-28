@@ -31,7 +31,8 @@
             <td>{{ $rest->plan_rest_time }}</td>
             <td>
             <div>
-              <a href="{{ action('Admin\ManageController@agree', ['id' => $rest->id]) }}">承認</a>
+              <a href="{{ action('Admin\ManageController@result', ['id' => $rest->id,'result' => 'confirm']) }}">承認</a>
+              <a href="{{ action('Admin\ManageController@result', ['id' => $rest->id,'result' => 'deny']) }}">否認</a>
             </div>
             </td>
           </tr>
