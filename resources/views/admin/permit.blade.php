@@ -31,8 +31,14 @@
             <td>{{ $rest->plan_rest_time }}</td>
             <td>
             <div>
-              <a href="{{ action('Admin\ManageController@result', ['id' => $rest->id,'result' => 'confirm']) }}">承認</a>
-              <a href="{{ action('Admin\ManageController@result', ['id' => $rest->id,'result' => 'deny']) }}">否認</a>
+              <a href="{{ action('Admin\ManageController@result', ['id' => $rest->id,'result' => 'confirm']) }}"
+               onclick="return confirm('この有給申請を承認してよろしいでしょうか？')">
+              承認
+              </a>
+              <a href="{{ action('Admin\ManageController@result', ['id' => $rest->id,'result' => 'deny']) }}"
+               onclick="return confirm('この有給申請を否認してよろしいでしょうか？')">
+              否認
+              </a>
             </div>
             </td>
           </tr>
@@ -76,7 +82,7 @@
             </p>
             <p>
             <label class="col-md-2" for="title">パスワード
-              <input type="text" class="input_form" name="password">
+              <input type="password" class="input_form" name="password">
             </label>
             </p>
             <p>
@@ -85,9 +91,10 @@
             </label>
             </p>
             <p>
-            <label class="col-md-2" for="title">権限
-              <input type="text" class="input_form" name="role">
-            </label>
+            <label class="col-md-2" for="title">管理者権限
+              <label><input type="radio" class="input_form" name="role" value="1">あり</label>
+              <label><input type="radio" class="input_form" name="role" value="0">なし</label>
+           </label>
             </p>
             <p>
             <label class="col-md-2" for="title">有給（h）
