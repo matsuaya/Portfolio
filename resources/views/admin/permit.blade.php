@@ -82,7 +82,7 @@
             </p>
             <p>
             <label class="col-md-2" for="title">パスワード
-              <input type="password" class="input_form" name="password">
+              <input type="text" class="input_form" name="password">
             </label>
             </p>
             <p>
