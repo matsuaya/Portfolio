@@ -42,7 +42,7 @@
                     </label>
                     </p>
                     {{ csrf_field() }}
-                    <input type="submit" class="btn_edit" value="変更">
+                    <input type="submit" class="btn_edit" value="登録">
                 </div>
         </form>
     </body>

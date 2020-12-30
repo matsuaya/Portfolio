@@ -50,11 +50,10 @@ class User extends Authenticatable
         'sum_rest_time' => 'required',
     );
     
-    public  static function getCurrentHistories(){
-        $today=new Carbon();
-        $today=Carbon::now()->format('m');
+    public  static function getCurrentHistories($year,$month){
         $employee_code=Auth::user()->employee_code;
-        $histories=History::whereMonth('start_time',$today )
+        $histories=History::whereYear('start_time',$year)
+                    ->whereMonth('start_time',$month )
                     ->where('employee_code',$employee_code)
                     ->orderBy('start_time','asc')->get();
                     

@@ -18,7 +18,10 @@ class UserController extends Controller
     
     public function applyIndex(Request $request)
     {
-        return view('user.offer');
+        $employee_code=Auth::user()->employee_code;
+        $applications=Rest::where('employee_code',$employee_code)->get();
+        
+        return view('user.offer',['applications'=>$applications]);
     }
     
     public function restApply(Request $request)
@@ -69,9 +72,15 @@ class UserController extends Controller
     
     public function listView(Request $request)
     {
-        $histories = User::getCurrentHistories();
+        $year=new Carbon;
+        $year=Carbon::now()->format('Y');
+        $month=new Carbon;
+        $month=Carbon::now()->format('m');
+        $day=new Carbon;
+        $day=Carbon::now()->format('t');
+        $histories = User::getCurrentHistories($year,$month);
 
-        return view('user.calendar',['histories'=>$histories]);
+        return view('user.calendar',['histories'=>$histories,'year'=>$year,'month'=>$month,'day'=>$day]);
     }
     
     public function listEdit(Request $request)
@@ -79,9 +88,22 @@ class UserController extends Controller
         return view('user.calendar');
     }
     
-    public function csvExport()
+    public function listChange(Request $request)
     {
-        $historiesResults = User::getCurrentHistories();
+        $year = substr($request->change,0,4);
+        $month = substr($request->change, -2);
+        $day = new Carbon();
+        $day = Carbon::create($year,$month,1,0,0,0);
+        $day = $day->format('t');
+        $histories = User::getCurrentHistories($year,$month);
+        return view('user.calendar',['histories'=>$histories,'year'=>$year,'month'=>$month,'day'=>$day]);
+    }
+    
+    public function csvExport(Request $request)
+    {
+        $year = $request->year;
+        $month = $request->month;
+        $historiesResults = User::getCurrentHistories($year,$month);
 
         $filename = 'workHistories.csv';
         $file = Csv::createCsv($filename);

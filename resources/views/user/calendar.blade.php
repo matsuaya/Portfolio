@@ -1,8 +1,3 @@
-@php
-use Carbon\Carbon;
-$thisMonth=new Carbon;
-$thisMonth=Carbon::now()->format('m');
-@endphp
 
 <!DOCTYPE html>
 <html>
@@ -17,7 +12,7 @@ $thisMonth=Carbon::now()->format('m');
     
     <body>
         <CENTER>
-        <h2>{{$thisMonth}}月勤怠一覧</h2>
+        <h2>勤怠一覧</h2>
         {{-- ログアウトボタン追加　--}}
         @can('admin_auth')
         <a class="admin" href="{{ action('Admin\ManageController@manage')}}">管理画面</a>
@@ -45,12 +40,12 @@ $thisMonth=Carbon::now()->format('m');
             @php
             $count=0;
             @endphp
-            @for($i=1;$i<=date('t');$i++)
+            @for($i=1;$i<=$day;$i++)
             <tr>
-              <td>{{ $i."日" }}</td>
+              <td>{{ $year."-".$month."-".str_pad($i,2,0,STR_PAD_LEFT) }}</td>
                 @if($count<count($histories)&&$histories[$count]->start_time->format('j') == $i)
-                    <td>{{ $histories[$count]->start_time }}</td>
-                    <td>{{ $histories[$count]->end_time }}</td>
+                    <td>{{ $histories[$count]->start_time->format('H:i') }}</td>
+                    <td>{{ $histories[$count]->end_time->format('H:i') }}</td>
                     <td>{{ $histories[$count]->break_time }}</td>
                     <td>
                       <div>
@@ -61,18 +56,29 @@ $thisMonth=Carbon::now()->format('m');
                   $count++;
                   @endphp
                 @else
-                    <td>未入力</td>
-                    <td>未入力</td>
-                    <td>未入力</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
                     <td></td>
                 @endif
             </tr>
             @endfor
-        </tbody>
+          </tbody>
+          <input type="hidden" name="year" value="{{ $year }}">
+          <input type="hidden" name="month" value="{{ $month }}">
         <button class="csv" type='submit'>CSV出力</button>
+        </form>
+        
+        <form action="{{ action('Admin\UserController@listChange') }}" method="post" enctype="multipart/form-data">
+        @csrf
+        <p>
+          <input type="month" name="change">
+          <button class="change" type='submit'>表示</button>
+        </p>
+        </form>
         </thead>
         </table>
-        </form>
+        
         </CENTER>
     </body>
 </html>
